@@ -1,0 +1,96 @@
+name: environnement de test
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+#  code_front_dev:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory: Bpa_v2_front
+#        run: docker build -t front_dev . --target=dev
+
+  code_front_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperation du code de l'application
+        uses: actions/checkout@v4
+
+      - name: Dockerisation
+        working-directory: Bpa_v2_front
+        run: docker build -t front_prod . --target=test
+
+#  code_back_dev:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory: Bpa_v2_bakc
+#        run: docker build -t back_dev . --target=dev
+
+  code_back_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperation du code de l'application
+        uses: actions/checkout@v4
+
+      - name: Dockerisation
+        working-directory:  Bpa_v2_bakc
+        run: docker build -t front_prod . --target=prod
+
+#  sqlserver_dev:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory:  sqlServer_spring
+#        run: docker build -t sql . --target=dev
+
+  sqlserver_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperation du code de l'application
+        uses: actions/checkout@v4
+
+      - name: Dockerisation
+        working-directory:  sqlServer_spring
+        run: docker build -t sql . --target=prod
+
+  deploy:
+    needs: [code_back_prod, code_front_prod, sqlserver_prod]
+    runs-on: ubuntu-latest
+    steps:
+      - name: En attente du serveur
+        run: echo "Toutes les etapes sont pretes"
+
+      - name: Installation de ssh pass
+        run: sudo apt install && SUDO apt install sshpass
+
+      - name: Connexion SSH et exécution des commandes à distance
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
+            mkdir felicitation
+          EOF
+        env:
+          SSH_USER: ${{ secrets.SSH_USER_PROD }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD_PROD }}
+          SSH_HOST: ${{ secrets.SSH_HOST_PROD }}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+
+<div id="wrapper" class="d-flex" *ngIf="isLoggedIn">
+  <app-sidebar></app-sidebar>
+  <div id="content-wrapper" class="d-flex flex-column">
+    <app-topbar></app-topbar>
+    <app-main></app-main>
+  </div>
+</div>
+<router-outlet *ngIf="!isLoggedIn"></router-outlet>
+

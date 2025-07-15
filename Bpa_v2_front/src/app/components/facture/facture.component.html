@@ -1,0 +1,101 @@
+<div *ngIf="isLoading" class="fixed inset-0 z-50 bg-white bg-opacity-90 flex flex-col items-center justify-center">
+    <div class="flex justify-center items-center">
+        <div class="loader-container">
+            <div class="loader-outer-ring"></div>
+            <div class="loader-inner-ring"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <div class="text-center mt-6">
+        <h3 class="text-lg font-medium text-gray-700 mb-1">Chargement en cours</h3>
+        <p class="text-sm text-primary">
+            Veuillez patienter<span class="loading-dots">...</span>
+        </p>
+    </div>
+</div>
+<div class="container-fluid" *ngIf="!isLoading">
+    <h1 class="h3 mb-3 text-gray-800 font-bold"><i class="fas fa-fw fa-list"></i>Aprobations des factures complémentaire</h1>
+    <div class="card-header d-flex justify-content-between align-items-center py-3">
+        <form (submit)="onFormSubmitForDem($event)" class="d-flex gap-2 col-md-6">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    [(ngModel)]="critere" 
+                    name="critere"
+                    required
+                    class="form-control mr-2"
+                    placeholder="Rechercher..."
+                    aria-label="Search term"
+                >
+                <button class="btn btn-primary mr-1" type="submit">
+                    <i class="pi pi-search"></i> 
+                </button>
+            </div>
+            <button class="btn btn-secondary" type="button" (click)="toReload()" aria-label="Reload search">
+                <i class="pi pi-refresh"></i>
+            </button>
+        </form>
+    </div> 
+    <div class="card shadow mb-4">                           
+        <div class="card-body" >
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="text-gray-800">N° Facture</th>
+                            <th class="text-gray-800">Societe</th>
+                            <th class="text-gray-800">Fournisseur</th>
+                            <th class="text-gray-800">Date</th>
+                            <th class="text-gray-800">Montant</th>
+                            <th class="text-gray-800">Devise</th>
+                            <!-- <th class="text-gray-800">NFCAV</th> -->
+                        </tr>
+                    </thead>
+                    <tbody class="cursor-pointer">
+                        <tr *ngFor="let facture of factures" class="hover:bg-gray-50  transition-colors duration-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary ">
+                                <a (click)="redirectDetails(facture.uid)">
+                                    {{facture.uid}}
+                                </a>
+                            </td>                         
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary ">
+                                <a (click)="redirectDetails(facture.uid)">
+                                    {{facture.societe}}
+                                </a>
+                            </td>                         
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary ">
+                                <a (click)="redirectDetails(facture.uid)">
+                                    {{facture.fournisseur}}
+                                </a>
+                            </td>                         
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary ">
+                                <a (click)="redirectDetails(facture.uid)">
+                                    {{facture.date}}
+                                </a>
+                            </td>                         
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary ">
+                                <a (click)="redirectDetails(facture.uid)">
+                                    {{facture.montant}}
+                                </a>
+                            </td>                         
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary ">
+                                <a (click)="redirectDetails(facture.uid)">
+                                    {{facture.devise}}
+                                </a>
+                            </td>
+                        </tr>                           
+                    </tbody>
+                </table>
+            </div>
+            <p-paginator 
+                [rows]="size" 
+                [totalRecords]="totalElements" 
+                (onPageChange)="onPageChange($event)" 
+                [rowsPerPageOptions]="[5, 10, 15]">
+            </p-paginator>
+        </div>
+    </div>
+</div>
+
+

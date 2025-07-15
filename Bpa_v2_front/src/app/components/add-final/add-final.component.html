@@ -1,0 +1,60 @@
+<div *ngIf="isLoading" class="fixed inset-0 z-50 bg-white bg-opacity-90 flex flex-col items-center justify-center">
+    <!-- Loader centré -->
+    <div class="flex justify-center items-center">
+        <div class="loader-container">
+            <div class="loader-outer-ring"></div>
+            <div class="loader-inner-ring"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+  
+    <div class="text-center mt-6">
+        <h3 class="text-lg font-medium text-gray-700 mb-1">Chargement en cours</h3>
+        <p class="text-sm text-gray-500">
+            Veuillez patienter<span class="loading-dots">...</span>
+        </p>
+    </div>
+</div>
+<div *ngIf="!isLoading">
+    <h1 class="h3 mb-3 text-gray-800">Gestion des destinations finals des email</h1>
+    
+    <div class="card shadow mb-4">
+        <!-- En-tête avec bouton retour et titre bien alignés -->
+        <div class="card-header d-flex justify-content-between align-items-center py-3">
+            <a class="btn btn-secondary btn-icon-split" (click)="redirectBack()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Retour</span>
+            </a>
+            <h6 class="m-0 font-weight-bold text-primary">Ajouter une nouvelle destination</h6>
+        </div>
+
+        <!-- Formulaire bien structuré -->
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="p-4">
+                        <form class="user" (ngSubmit)="insertMenu()">
+                            <div class="form-group">
+                                <label for="label">Designation</label>
+                                <input type="text" name="label" [(ngModel)]="finaldestination.uid" class="form-control"
+                                    id="label" placeholder="Entrer la designation">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" name="email" [(ngModel)]="finaldestination.designation" class="form-control"
+                                    id="email" placeholder="Entrer l'email">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Insérer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

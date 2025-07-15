@@ -1,0 +1,101 @@
+<div *ngIf="isLoading" class="fixed inset-0 z-50 bg-white bg-opacity-90 flex flex-col items-center justify-center">
+    <!-- Loader centré -->
+    <div class="flex justify-center items-center">
+        <div class="loader-container">
+            <div class="loader-outer-ring"></div>
+            <div class="loader-inner-ring"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+  
+    <div class="text-center mt-6">
+        <h3 class="text-lg font-medium text-gray-700 mb-1">Chargement en cours</h3>
+        <p class="text-sm text-gray-500">
+            Veuillez patienter<span class="loading-dots">...</span>
+        </p>
+    </div>
+</div>
+<div *ngIf="!isLoading">
+    <h1 class="h3 mb-3 text-gray-800 font-bold"><i class="fas fa-fw fa-user"></i>Gestion utilisateurs</h1>
+    <div class="card shadow mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center py-3">
+            <form (submit)="onFormSubmit($event)" class="d-flex gap-2 col-md-6">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        [(ngModel)]="critere" 
+                        name="critere"
+                        required
+                        class="form-control mr-2"
+                        placeholder="Rechercher..."
+                        aria-label="Search term"
+                    >
+                    <button class="btn btn-primary mr-1" type="submit">
+                        <i class="pi pi-search"></i> 
+                    </button>
+                </div>
+                <button class="btn btn-secondary" type="button" (click)="toReload()" aria-label="Reload search">
+                    <i class="pi pi-refresh"></i>
+                </button>
+            </form>
+            <!-- <button class="btn btn-primary" (click)=" aJours()">mettre à jours</button> -->
+        </div>   
+        <div class="card-header d-flex justify-content-between align-items-center py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des utilisateurs actifs</h6>
+            <button class="btn btn-primary" (click)="redirectAdd()"><i class="fas fa-plus"></i>Ajouter</button>
+        </div>            
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="text-gray-800">#id</th>
+                            <th class="text-gray-800">Nom</th>
+                            <th class="text-gray-800">Prenom</th>
+                            <th class="text-gray-800">Email</th>
+                            <th class="text-gray-800">Role</th>
+                            <th class="text-gray-800"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center" *ngFor="let user of users">
+                            <td><a  class="text-primary cursor-pointer" (click)="redirectUpdate(user.idUser)">{{user.id_x3}}</a></td>
+                            <td><a  class="text-primary cursor-pointer" (click)="redirectUpdate(user.idUser)">{{user.nom}}</a></td>
+                            <td><a  class="text-primary cursor-pointer" (click)="redirectUpdate(user.idUser)">{{user.prenom}}</a></td>
+                            <td><a  class="text-primary cursor-pointer" (click)="redirectUpdate(user.idUser)">{{user.email}}</a></td>
+                            <td><a  class="text-primary cursor-pointer" (click)="redirectUpdate(user.idUser)">{{user.role.role}}</a></td>
+                            <td>
+                                <div class="d-flex">
+                                    <!-- Bouton Modifier -->
+                                    <a class="btn btn-success btn-icon-split btn-valide" (click)="redirectUpdate(user.idUser)">
+                                        <span class="icon text-white">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                    </a>
+                                    
+                                    <!-- Bouton Supprimer -->
+                                    <a class="btn btn-danger btn-icon-split btn-valide" (click)="deleteUtilisateur(user.idUser)">
+                                        <span class="icon text-white">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                    </a>
+                                    
+                                    <a class="btn btn-primary btn-icon-split btn-valide" (click)="changePassword(user.id_x3)">
+                                        <span class="icon text-white">
+                                            <i class="pi pi-refresh"></i>
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>                            
+                    </tbody>
+                </table>
+            </div>
+            <p-paginator 
+                [rows]="size" 
+                [totalRecords]="totalElements" 
+                (onPageChange)="onPageChange($event)" 
+                [rowsPerPageOptions]="[5, 10, 15]">
+            </p-paginator>
+        </div>
+    </div>
+</div>

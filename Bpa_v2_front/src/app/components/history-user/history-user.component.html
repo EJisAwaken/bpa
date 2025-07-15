@@ -1,0 +1,90 @@
+<div *ngIf="isLoading" class="fixed inset-0 z-50 bg-white bg-opacity-90 flex flex-col items-center justify-center">
+    <!-- Loader centré -->
+    <div class="flex justify-center items-center">
+        <div class="loader-container">
+            <div class="loader-outer-ring"></div>
+            <div class="loader-inner-ring"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+  
+    <div class="text-center mt-6">
+        <h3 class="text-lg font-medium text-gray-700 mb-1">Chargement en cours</h3>
+        <p class="text-sm text-gray-500">
+            Veuillez patienter<span class="loading-dots">...</span>
+        </p>
+    </div>
+</div>
+<!-- Historique des validations -->
+<div *ngIf="!isLoading">
+    <h1 class="h3 mb-3 text-gray-800 font-bold"><i class="fas fa-fw fa-receipt"></i> Historiques de validation</h1>
+    <div class="card shadow-lg rounded-lg border">
+        <div class="card-header py-3 bg-primary text-white rounded-t-lg flex justify-between items-center">
+            <span class="font-bold">Recherche par date</span>
+        </div>
+
+        <!-- Barre de recherche -->
+        <div class="card-header d-flex justify-content-between">
+            <form  class="d-flex col-md-6" (submit)="onFormSubmit($event)">
+                <div class="input-group">
+                    <input 
+                            type="date"
+                            name="date1"
+                            [(ngModel)]="date1"
+                            required
+                            class="form-control mr-2"
+                            style="font-size: 13px;"
+                            aria-label="Search term"
+                            >
+                            <input 
+                            type="date"
+                            name="date2"
+                            [(ngModel)]="date2"
+                            required
+                            class="form-control mr-2"
+                            style="font-size: 13px;"
+                            aria-label="Search term"
+                            >
+                            <button class="btn btn-primary mr-1" type="submit">
+                                <i class="pi pi-search"></i> 
+                            </button>
+                    </div>
+                <button class="btn btn-secondary" (click)="toReload()" type="button" aria-label="Reload search">
+                    <i class="pi pi-refresh"></i>
+                </button>
+            </form>
+        </div> 
+
+        <!-- Tableau des validations -->
+        <div class="card-body overflow-auto">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle">
+                    <thead class="bg-gray-100 text-gray-800">
+                        <tr class="text">
+                            <th class="text-gray-800">#ID</th>
+                            <th class="text-gray-800">N° Commande</th>
+                            <th class="text-gray-800">Objet</th>
+                            <th class="text-gray-800">Montant</th>
+                            <th class="text-gray-800">Action</th>
+                            <th class="text-gray-800">Motif</th>
+                            <th class="text-gray-800">Validateur</th>
+                            <th class="text-gray-800">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let demande of validations" class="border-b hover:bg-gray-50 transition-all">
+                            <td class="text-nowrap font-semibold text-gray-700">{{ demande.idValidation }}</td>
+                            <td class="text-nowrap">{{ demande.demande }}</td>
+                            <td class="text-nowrap">{{ demande.objet }}</td>
+                            <td class="text-nowrap">{{ demande.montant }}</td>
+                            <td class="text-nowrap font-bold text-blue-600">{{ demande.etat.def }}</td>         
+                            <td class="text-nowrap font-bold text-blue-600">{{ demande.motif }}</td>         
+                            <td class="text-nowrap">{{ demande.user.prenom }} {{ demande.user.nom }}</td>
+                            <td class="text-nowrap">{{ demande.date_validation | date:'yyyy-MM-dd HH:mm:ss' }}</td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

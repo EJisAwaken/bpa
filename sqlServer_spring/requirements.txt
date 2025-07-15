@@ -1,0 +1,4 @@
+django
+mssql-django
+pyodbc
+python-decouple

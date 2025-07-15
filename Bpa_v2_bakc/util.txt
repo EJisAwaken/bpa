@@ -1,0 +1,4 @@
+docker run -it --rm -v %cd%/Bpa_v2_bakc:/app maven:3.8.4-openjdk-17 bash
+cd /app
+mvn clean package -DskipTests
+ls target/

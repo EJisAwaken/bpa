@@ -1,0 +1,55 @@
+services:
+  mysql:
+    image: mysql:8.0.42
+    container_name: mysql-8.0.42
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql 
+      
+  django:
+    build:
+      context: ./sqlServer_spring  # Le projet Django
+      dockerfile: Dockerfile
+    container_name: django-app
+    ports:
+      - "8000:8000"
+    env_file:
+      - sqlServer_spring/.env 
+
+  spring-boot:
+    build:
+      context: ./Bpa_v2_bakc
+      dockerfile: Dockerfile
+    container_name: spring-boot-app
+    ports:
+      - "8181:8181"
+    depends_on:
+      - mysql
+      - django  
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:${MYSQL_PORT}/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+  angular:
+    build:
+      context: ./Bpa_v2_front
+      dockerfile: Dockerfile
+    container_name: angular-app
+    ports:
+      - "4201:4201"
+    depends_on:
+      - spring-boot 
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mysql_data:

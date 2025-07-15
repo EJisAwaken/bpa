@@ -1,0 +1,20 @@
+.container{
+    margin-top: 150px;
+}
+
+.easy-approve {
+    font-family: monospace;
+    font-weight: 600;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.easy-approve:hover {
+    cursor: pointer;
+    color: #cce4f6;
+    box-shadow: 0 6px 16px rgba(0, 64, 133, 0.3);
+    transform: translateY(-2px);
+}

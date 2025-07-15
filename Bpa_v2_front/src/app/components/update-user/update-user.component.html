@@ -1,0 +1,87 @@
+<div *ngIf="isLoading" class="fixed inset-0 z-50 bg-white bg-opacity-90 flex flex-col items-center justify-center">
+    <!-- Loader centré -->
+    <div class="flex justify-center items-center">
+        <div class="loader-container">
+            <div class="loader-outer-ring"></div>
+            <div class="loader-inner-ring"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+  
+    <div class="text-center mt-6">
+        <h3 class="text-lg font-medium text-gray-700 mb-1">Chargement en cours</h3>
+        <p class="text-sm text-gray-500">
+            Veuillez patienter<span class="loading-dots">...</span>
+        </p>
+    </div>
+</div>
+<div *ngIf="!isLoading">
+    <h1 class="h3 mb-3 text-gray-800">Gestion des utilisateurs</h1>
+    
+    <div class="card shadow mb-4">
+        <!-- En-tête avec bouton retour et titre bien alignés -->
+        <div class="card-header d-flex justify-content-between align-items-center py-3">
+            <a class="btn btn-secondary btn-icon-split" (click)="redirectBack()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Retour</span>
+            </a>
+            <h6 class="m-0 font-weight-bold text-primary">Modifier les informations de l'utilisateur</h6>
+        </div>
+
+        <!-- Formulaire bien structuré -->
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="p-4">
+                        <form class="user" (ngSubmit)="updateUser()">
+                            <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input type="text" name="nom" [(ngModel)]="user.nom" [value]="userRequest?.nom" class="form-control"
+                                    id="nom">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="prenom">Prénom</label>
+                                <input type="text" name="prenom" [(ngModel)]="user.prenom" [value]="userRequest?.prenom" class="form-control"
+                                    id="prenom">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="prenom">Email</label>
+                                <input type="text" name="email" [(ngModel)]="user.email" [value]="userRequest?.email" class="form-control"
+                                    id="email">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="prenom">Identifiant</label>
+                                <input type="text" name="id_x3" [(ngModel)]="user.id_x3" [value]="userRequest?.id_x3" class="form-control"
+                                    id="id_x3">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="prenom">Interim</label>
+                                <input type="text" name="interim" [(ngModel)]="user.interim" [value]="userRequest?.interim" class="form-control"
+                                    id="interim">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Rôle</label>
+                                <select name="role" id="role" [(ngModel)]="user.idRole" class="form-control">
+                                    <option [value]="role.idRole" *ngFor="let role of roles">{{role.role}}</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Modifier
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

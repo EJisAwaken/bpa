@@ -1,0 +1,136 @@
+<div *ngIf="isLoading" class="fixed inset-0 z-50 bg-white bg-opacity-90 flex flex-col items-center justify-center">
+    <!-- Loader centré -->
+    <div class="flex justify-center items-center">
+        <div class="loader-container">
+            <div class="loader-outer-ring"></div>
+            <div class="loader-inner-ring"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+  
+    <div class="text-center mt-6">
+        <h3 class="text-lg font-medium text-gray-700 mb-1">Chargement en cours</h3>
+        <p class="text-sm text-gray-500">
+            Veuillez patienter<span class="loading-dots">...</span>
+        </p>
+    </div>
+</div>
+<div *ngIf="!isLoading">
+    <div class="card-header d-flex justify-content-between">
+        <form  class="d-flex col-md-6" (submit)="onFormSubmit($event)">
+            <div class="input-group">
+                <input 
+                        type="date"
+                        name="date1"
+                        [(ngModel)]="date1"
+                        required
+                        class="form-control mr-2"
+                        style="font-size: 15px;"
+                        aria-label="Search term"
+                        >
+                        <input 
+                        type="date"
+                        name="date2"
+                        [(ngModel)]="date2"
+                        required
+                        class="form-control mr-2"
+                        style="font-size: 15px;"
+                        aria-label="Search term"
+                        >
+                        <button class="btn btn-primary mr-1" type="submit">
+                            <i class="pi pi-search"></i> 
+                        </button>
+                    </div>
+                    <button class="btn btn-secondary" (click)="toReload()" type="button" aria-label="Reload search">
+                        <i class="pi pi-refresh"></i>
+                    </button>
+                </form>
+            </div> 
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md">
+              <div class="card p-3">
+                <div class="row">
+                  <div class="col-md-3 cursor-pointer hover-shadow">
+                    <div class="small-box text-success p-3 bg-light rounded">
+                      <p class="card-title">Total Validé</p>
+                      <p class="card-value">{{dataAdmin?.total_valid}} demandes</p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 cursor-pointer hover-shadow">
+                    <div class="small-box text-danger p-3 bg-light rounded">
+                      <p class="card-title">Total Refusé</p>
+                      <p class="card-value">{{dataAdmin?.total_refus}} demandes</p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 cursor-pointer hover-shadow">
+                    <div class="small-box text-primary p-3 bg-light rounded">
+                      <p class="card-title">Total Partiellement Validé</p>
+                      <p class="card-value">{{dataAdmin?.total_part}} demandes</p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 cursor-pointer hover-shadow" (click)="redirectDA()">
+                    <div class="small-box p-3 bg-light rounded">
+                      <p class="card-title">Total En Attente</p>
+                      <p class="card-value">{{dataAttente?.total}} demandes</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>         
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 border rounded mt-4">
+                        <p class="text-muted text-center">DEMANDE D'ACHAT</p>
+                        <div class="double-box">
+                            <div class="small-box text-success">{{dataAdmin?.validDA}}</div>
+                            <div class="small-box text-danger">{{dataAdmin?.refusDA}}</div>
+                            <div class="small-box text-primary">{{dataAdmin?.part_da}}</div>
+                            <div class="small-box cursor-pointer" (click)="redirectDA()">{{dataAttente?.total_da}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 border rounded mt-4">
+                        <p class="text-muted text-center">VALIDATION PAR LIGNE DA</p>
+                        <div class="double-box">
+                            <div class="small-box text-success">{{dataAdmin?.validLigne}}</div>
+                            <div class="small-box text-danger">{{dataAdmin?.refusLigne}}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 border rounded mt-4">
+                        <p class="text-muted text-center">BON DE COMMANDE</p>
+                        <div class="double-box">
+                            <div class="small-box text-success">{{dataAdmin?.validBC}}</div>
+                            <div class="small-box text-danger">{{dataAdmin?.refusBC}}</div>
+                            <div class="small-box text-primary">{{dataAdmin?.part_bc}}</div>
+                            <div class="small-box cursor-pointer" (click)="redirectBC()">{{dataAttente?.total_bc}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 border rounded mt-4">
+                        <p class="text-muted text-center">FACTURE COMPLEMENTAIRE</p>
+                        <div class="double-box">
+                            <div class="small-box text-success">{{dataAdmin?.validFC}}</div>
+                            <div class="small-box text-danger">{{dataAdmin?.refusFC}}</div>
+                            <div class="small-box text-primary">{{dataAdmin?.part_fc}}</div>
+                            <div class="small-box cursor-pointer" (click)="redirectFC()">{{dataAttente?.total_fc}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-4">
+                <div class="card p-4">
+                    <p-chart type="bar" [data]="data" [options]="options" class="h-[30rem]"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

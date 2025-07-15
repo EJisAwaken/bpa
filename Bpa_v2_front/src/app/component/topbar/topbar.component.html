@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <!-- Bouton Toggle Sidebar avec Dropdown -->
+    <button id="sidebarToggleTop" 
+        class="btn btn-link d-md-none rounded-circle mr-3 dropdown-toggle" 
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-right shadow custom-dropdown" aria-labelledby="sidebarToggleTop">
+        <ng-container *ngFor="let item of dropdownItems">
+            <li>
+            <a class="dropdown-item custom-dropdown-item" [routerLink]="item.route">
+                <i class="{{ item.icone }} me-2 text-primary"></i> {{ item.label }}
+            </a>
+            </li>
+        </ng-container>
+        
+        <!-- Bouton spécifique : affiché uniquement si role = 1 -->
+        <li *ngIf="utilisateur?.role?.unique_role === 'admin'" class="dropdown-divider"></li>
+        <li *ngIf="utilisateur?.role?.unique_role === 'admin'">
+            <button 
+            class="btn btn-primary w-100 d-flex align-items-center justify-content-center custom-sync-btn" 
+            (click)="update()">
+            <span *ngIf="!isLoadingbtn"> <i class="fa fa-sync"></i>Synchronisation des données</span>
+            <span *ngIf="isLoadingbtn">
+                <i class="fa fa-spinner fa-spin"></i> Synchronisation en cours...
+            </span>
+            </button>
+        </li>
+    </ul>
+      
+    
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown no-arrow">
+            <a class="text-primary cursor-pointer btn btn-light custom-btn me-2 position-relative" (click)="notifs()">
+                <i class="fas fa-bell fa-sm fa-fw text-gray-400"></i> Notification
+                <span *ngIf="nonLusCount > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white">
+                  {{ nonLusCount }}
+                </span>
+            </a>
+              
+            <a class="text-primary cursor-pointer btn btn-light custom-btn dropdown-toggle" 
+                 id="userDropdown" 
+                 role="button"
+                 data-toggle="dropdown" 
+                 aria-haspopup="true" 
+                 aria-expanded="false"
+                 title="Ouvrir le menu utilisateur"
+                 aria-label="Ouvrir le menu utilisateur">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                </span>
+                <i class="fa fa-chevron-down ml-2"></i>
+            </a>
+                            
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <a class="dropdown-item" >
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    {{utilisateur?.prenom}} {{utilisateur?.nom}}
+                </a>
+                <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" (click)="setting()">
+                    <i class="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Changer mot de passe
+                </a>                
+                <a class="dropdown-item"  data-toggle="modal" data-target="#logoutModal" (click)="onLogout()">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Deconnexion
+                </a>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>

@@ -1,0 +1,75 @@
+<div class="btn-group mb-4" role="group">
+  <button 
+    [class.active]="!isInterimView"
+    class="btn btn-outline-primary position-relative"
+    (click)="showRegularView()">
+    Vos demandes
+    <span 
+      *ngIf="count > 0"
+      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+      style="font-size: 0.8rem; color: white;">
+      {{ count }}
+    </span>
+    <span *ngIf="!isInterimView" class="active-indicator"></span>
+  </button>
+  
+  <button 
+    [class.active]="isInterimView"
+    class="btn btn-outline-warning position-relative"
+    (click)="showInterimView()">
+    Vos demandes en tant qu'intérim et les factures
+    <span 
+      *ngIf="countInterim > 0"
+      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+      style="font-size: 0.8rem; color: white;">
+      {{ countInterim }}
+    </span>
+    <span *ngIf="isInterimView" class="active-indicator"></span>
+  </button>
+</div>
+
+<div class="container mt-3" *ngIf="!isInterimView">
+  <h4>Vos demandes</h4>
+  <ng-container *ngIf="notifs && notifs.length > 0">
+    <div *ngFor="let notif of notifs"
+         class="alert d-flex align-items-stretch shadow-sm cursor-pointer p-0 overflow-hidden mb-2"
+         [ngClass]="notif.lus ? 'alert-light' : 'alert-primary'"
+         role="alert"
+         style="min-height: 50px;"  
+         (click)="ouvrir(notif.uid,notif.id_x3)">
+      <div class="d-flex align-items-center justify-content-center bg-primary text-white px-3">
+        <i class="fas fa-bullhorn"></i>
+      </div>
+      <div class="flex-grow-1 d-flex align-items-center justify-content-between px-3">
+        <span>{{ notif.message }}</span>
+        <small class="text-muted ms-3" style="white-space: nowrap;">
+          {{ getTimeAgo(notif.date_notification) }}
+        </small>
+      </div>           
+    </div>
+  </ng-container>
+</div>
+
+<div class="container mt-3" *ngIf="isInterimView">
+  <h4>Demandes en tant qu'intérim et factures</h4>
+  <ng-container *ngIf="notifsInterim && notifsInterim.length > 0">
+    <div *ngFor="let notif of notifsInterim"
+         class="alert d-flex align-items-stretch shadow-sm cursor-pointer p-0 overflow-hidden mb-2"
+         [ngClass]="notif.lus ? 'alert-light' : 'alert-warning'"
+         role="alert"
+         style="min-height: 50px;"  
+         (click)="ouvrir(notif.uid,notif.id_x3)">
+      <div class="d-flex align-items-center justify-content-center bg-warning text-white px-3">
+        <i class="fas fa-user-clock"></i>
+      </div>
+      <div class="flex-grow-1 d-flex align-items-center justify-content-between px-3">
+        <span>{{ notif.message }}</span>
+        <small class="text-muted ms-3" style="white-space: nowrap;">
+          {{ getTimeAgo(notif.date_notification) }}
+        </small>
+      </div>          
+    </div>
+  </ng-container>
+</div>
+
+

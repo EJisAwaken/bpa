@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+@media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      left: -250px;
+      width: 250px;
+      transition: all 0.3s;
+    }
+  
+    .sidebar.toggled {
+      left: 0;
+    }
+}
+  

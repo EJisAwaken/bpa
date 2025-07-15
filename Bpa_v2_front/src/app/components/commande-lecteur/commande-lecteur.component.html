@@ -1,0 +1,111 @@
+<!-- Loader plein écran -->
+<div *ngIf="isLoading" class="fixed inset-0 z-50 bg-white bg-opacity-90 d-flex flex-column justify-content-center align-items-center">
+    <div class="loader-container mb-3">
+      <div class="loader-outer-ring"></div>
+      <div class="loader-inner-ring"></div>
+      <div class="loader-dot"></div>
+    </div>
+    <div class="text-center">
+      <h3 class="text-lg font-medium text-gray-700 mb-1">Chargement en cours</h3>
+      <p class="text-sm text-primary">Veuillez patienter<span class="loading-dots">...</span></p>
+    </div>
+  </div>
+  
+  <!-- Contenu principal -->
+  <div class="container-fluid" *ngIf="!isLoading">
+  
+    <!-- Filtrage par type de document -->
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center py-3 bg-light border-bottom">
+      <div class="btn-group" role="group" aria-label="Type de document">
+        <button type="button" class="btn btn-outline-primary" (click)="redirectDA()">Demandes d'achats</button>
+        <button type="button" class="btn btn-primary active">Bon de commandes</button>
+        <button type="button" class="btn btn-outline-primary" (click)="redirectFC()">Factures complémentaires</button>
+      </div>
+    </div>
+  
+    <!-- Titre principal -->
+    <h1 class="h3 mb-3 text-gray-800 font-bold">
+      <i class="fas fa-fw fa-list"></i> Listes des BC
+    </h1>
+  
+    <!-- Barre de recherche responsive -->
+    <div class="card-header bg-white py-3">
+      <form class="row g-2">
+        <div class="col-12 col-md-3">
+          <input
+            type="text"
+            [(ngModel)]="critere"
+            name="critere"
+            required
+            class="form-control"
+            placeholder="Numéro pièce..."
+            aria-label="Search term"
+          >
+        </div>
+  
+        <div class="col-12 col-md-3">
+          <select name="user" id="user" [(ngModel)]="validateur" class="form-select">
+            <option value="">Validateur</option>
+            <option [value]="user.id_x3" *ngFor="let user of users">{{user.nom}} {{user.prenom}}</option>
+          </select>
+        </div>
+  
+        <div class="col-12 col-md-3">
+          <select name="etat" id="etat" [(ngModel)]="etat" class="form-select">
+            <option value="">État</option>
+            <option [value]="etatItem.idEtat" *ngFor="let etatItem of etats">{{etatItem.def}}</option>
+          </select>
+        </div>
+  
+        <div class="col-12 col-md-3 d-flex align-items-center gap-2">
+          <button class="btn btn-primary" (click)="onFormSubmitForDem($event)" type="submit">
+            <i class="pi pi-search"></i>
+          </button>
+          <button class="btn btn-outline-secondary" type="button" (click)="toReload()">
+            <i class="pi pi-refresh"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Table responsive -->
+    <div class="card shadow mb-4">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr class="text-center">
+              <th class="text-gray-800">N° Pièce</th>
+              <th class="text-gray-800">Demandeur</th>
+              <th class="text-gray-800">Société</th>
+              <th class="text-gray-800">Montant</th>
+              <th class="text-gray-800">Devise</th>
+              <th class="text-gray-800">Validateur</th>
+              <th class="text-gray-800">État</th>
+              <th class="text-gray-800">Lien PJ</th>
+            </tr>
+          </thead>
+          <tbody class="cursor-pointer">
+            <tr *ngFor="let demande of commandes" class="text-center">
+              <td><a (click)="redirectDetails(demande.uid,demande.id_x3)">{{demande.uid}}</a></td>
+              <td><a (click)="redirectDetails(demande.uid,demande.id_x3)">{{demande.demandeur}}</a></td>
+              <td><a (click)="redirectDetails(demande.uid,demande.id_x3)">{{demande.societe}}</a></td>
+              <td><a (click)="redirectDetails(demande.uid,demande.id_x3)">{{demande.montant | number:'1.2-2'}}</a></td>
+              <td><a (click)="redirectDetails(demande.uid,demande.id_x3)">{{demande.devise}}</a></td>
+              <td><a (click)="redirectDetails(demande.uid,demande.id_x3)">{{demande.validateur}}</a></td>
+              <td><a (click)="redirectDetails(demande.uid,demande.id_x3)">{{demande.etat.def}}</a></td>
+              <td><a (click)="ouvrirLien(demande.lienPj)" class="text-blue-500 underline">Voir le PJ</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Pagination -->
+      <p-paginator 
+        [rows]="size" 
+        [totalRecords]="totalElements" 
+        (onPageChange)="onPageChange($event)" 
+        [rowsPerPageOptions]="[5, 10, 15]">
+      </p-paginator>
+    </div>
+  </div>
+  

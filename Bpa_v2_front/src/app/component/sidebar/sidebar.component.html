@@ -1,0 +1,48 @@
+<ul class="navbar-nav bg-gradient sidebar sidebar-dark accordion d-none d-md-block"
+    id="accordionSidebar"
+    [ngClass]="{'d-block': !isMobile && !isLoading, 'd-none': isMobile}"
+    *ngIf="!isLoading">
+
+    <a class="sidebar-brand d-flex align-items-center justify-content-center">
+        <img src="assets/img/habibo2.png" alt="" width="140" height="auto">
+    </a>
+
+    <hr class="sidebar-divider my-0">
+
+    <ng-container *ngFor="let item of menuItems">
+      <li  class="nav-item active">
+    
+
+        <!-- Si c'est un lien -->
+        <a  class="nav-link" [routerLink]="item.route">
+          <i class="{{ item.icone }}"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    </ng-container>
+    <button *ngIf="utilisateur?.role?.unique_role == 'admin'"
+                class="btn btn-primary w-100 d-sm-inline-block my-2"
+                (click)="update()">
+            <i class="fas fa-sync"></i>
+          <span *ngIf="!isLoadingbtn">Synchronisation des données</span>
+          <span *ngIf="isLoadingbtn">
+            <i class="fa fa-spinner fa-spin"></i> Synchronisation en cours...
+          </span>
+    </button>
+
+    <hr class="sidebar-divider">
+</ul>
+
+
+<!-- Sidebar de chargement (Spinner) -->
+<ul class="navbar-nav bg-gradient sidebar sidebar-dark accordion d-none d-md-block" 
+    id="accordionSidebar" 
+    *ngIf="isLoading">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center">
+        <img src="assets/img/habibo.png" alt="" class="w-100">
+    </a>
+    <hr class="sidebar-divider my-0">
+    <div class="spinner-border text-light" role="status">
+        <span class="sr-only">Chargement...</span>
+    </div>
+</ul>

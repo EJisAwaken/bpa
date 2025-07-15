@@ -1,0 +1,41 @@
+.cursor-pointer {
+    cursor: pointer;
+}
+  
+/* Style des boutons */
+.btn-group .btn {
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+  
+  .btn-group .btn.active {
+    font-weight: 600;
+  }
+  
+  .btn-group .btn-outline-primary.active {
+    color: #0032A0;
+    background-color: rgba(13, 110, 253, 0.1);
+  }
+  
+  .btn-group .btn-outline-warning.active {
+    color: #ffc107;
+    background-color: rgba(255, 193, 7, 0.1);
+  }
+  
+  /* Indicateur visuel sous le bouton actif */
+  .active-indicator {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background-color: currentColor;
+    border-radius: 3px;
+  }
+  
+  /* Espacement entre les boutons */
+  .btn-group .btn:not(:last-child) {
+    margin-right: 0.5rem;
+  }

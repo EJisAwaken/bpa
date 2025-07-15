@@ -1,0 +1,7 @@
+Bpa_v2_bakc/target
+# Bpa_v2_bakc/src/main/resources/application.properties
+
+Bpa_v2_front/node_modules
+# Bpa_v2_front/src/app/services/confURL
+
+# sqlServer_spring/.env

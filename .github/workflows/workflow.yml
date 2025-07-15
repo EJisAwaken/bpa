@@ -1,0 +1,99 @@
+name: environnement de test
+on:
+  push:
+    branches:
+      - serveur-teste
+
+jobs:
+#  code_front_dev:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory: Bpa_v2_front
+#        run: docker build -t front_dev . --target=dev
+
+#  code_front_test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application frontend
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory: Bpa_v2_front
+#        run: docker build -t front_test . --target=test
+
+#  code_back_dev:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory: Bpa_v2_bakc
+#        run: docker build -t back_dev . --target=dev
+
+#  code_back_prod:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory:  Bpa_v2_bakc
+#        run: docker build -t front_test . --target=prod
+
+#  sqlserver_dev:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory:  sqlServer_spring
+#        run: docker build -t sql . --target=dev
+
+#  sqlserver_test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory:  sqlServer_spring
+#        run: docker build -t sql . --target=prod
+
+
+  deploy:
+#    needs: [build-push-image-front-back]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY_TEST }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SSH_HOST_TEST }} >> ~/.ssh/known_hosts
+      - name: SSH to remote server and deploy
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER_TEST}}@${{ secrets.SSH_HOST_TEST }} << 'EOF'
+          cd ~/ && mkdir test
+          EOF
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+

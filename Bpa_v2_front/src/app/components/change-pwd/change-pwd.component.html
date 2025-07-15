@@ -1,0 +1,60 @@
+<div *ngIf="isLoading" class="loading-container">
+    <div class="loading-text">Chargement des données</div>
+    <div class="dots">
+        <span>.</span><span>.</span><span>.</span>
+    </div>
+    <a class="text-primary cursor-pointer" routerLink="/login">
+        <i class="fas fa-arrow-left"></i> 
+        reconnécter
+    </a>
+</div>
+<div class="container-fluid" *ngIf="!isLoading">
+    <h1 class="h3 mb-3 text-gray-800">Modification de mot de passe</h1>
+    
+    <div class="card shadow mb-4">
+        <!-- En-tête avec bouton retour et titre bien alignés -->
+        <div class="card-header d-flex justify-content-between align-items-center py-3">
+            <a class="btn btn-secondary btn-icon-split" onclick="window.history.back()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Retour</span>
+            </a>            
+        </div>
+
+        <!-- Formulaire bien structuré -->
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="p-4">
+                        <form class="user" (ngSubmit)="onChangePwd()">
+                            <div class="form-group">
+                                <label for="nom">Ancien mot de passe</label>
+                                <input type="password" name="nom" [(ngModel)]="ancien" class="form-control"
+                                    id="nom">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="prenom">Nouvel mot de passe</label>
+                                <input type="password" name="prenom" [(ngModel)]="nouvel" class="form-control"
+                                    id="prenom">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="prenom">Confirmation du mot de passe</label>
+                                <input type="password" name="email" [(ngModel)]="confirme" class="form-control"
+                                    id="email">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Changer le mot de passe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
