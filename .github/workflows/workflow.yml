@@ -2,7 +2,7 @@ name: environnement de test
 on:
   push:
     branches:
-      - serveur-teste
+      - main
 
 jobs:
 #  code_front_dev:
