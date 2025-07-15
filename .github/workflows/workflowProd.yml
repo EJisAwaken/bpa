@@ -12,15 +12,15 @@ jobs:
 #        working-directory: Bpa_v2_front
 #        run: docker build -t front_dev . --target=dev
 
-  code_front_prod:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Recuperation du code de l'application
-        uses: actions/checkout@v4
-
-      - name: Dockerisation
-        working-directory: Bpa_v2_front
-        run: docker build -t front_prod . --target=test
+#  code_front_prod:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Recuperation du code de l'application
+#        uses: actions/checkout@v4
+#
+#      - name: Dockerisation
+#        working-directory: Bpa_v2_front
+#        run: docker build -t front_prod . --target=test
 
 #  code_back_dev:
 #    runs-on: ubuntu-latest
